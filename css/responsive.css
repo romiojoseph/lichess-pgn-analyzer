@@ -1,0 +1,316 @@
+@media (max-width: 1366px) {
+    body {
+        max-width: 90%;
+        margin: 24px auto;
+    }
+
+    .container {
+        gap: 8px;
+    }
+
+    header {
+        gap: 4px;
+        margin-top: 0px;
+    }
+
+    .title {
+        font-size: var(--font-size-heading5);
+    }
+
+    .subtitle {
+        font-size: var(--font-size-body);
+    }
+
+    .distribution-cards {
+        gap: 16px;
+        margin: 4px 0;
+    }
+
+    .metric-card {
+        padding: 24px;
+    }
+
+    .parent-club {
+        gap: 8px;
+    }
+
+    .group-club {
+        gap: 12px;
+    }
+
+    h6 {
+        font-size: var(--font-size-caption);
+    }
+
+    .metric-card p,
+    .value {
+        font-size: var(--font-size-heading3);
+    }
+
+    .sub-labels-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .metric-card .sub-label-item {
+        align-items: center;
+    }
+
+    .metric-card .label {
+        margin-top: 16px;
+    }
+
+    small {
+        font-size: var(--font-size-caption);
+        margin-top: 4px;
+    }
+
+    .username-greeting {
+        margin: 12px 0 6px;
+    }
+
+    .modal-content {
+        max-width: 90%;
+    }
+
+    #games-as-white,
+    #games-as-black {
+        padding: 16px;
+    }
+
+    .option-buttons {
+        gap: 16px;
+        margin: 16px 0;
+    }
+
+    .opening-card .metric-card {
+        padding: 16px;
+    }
+
+    .opening-card {
+        gap: 16px;
+        margin: 16px;
+    }
+
+    .opening-card .section-heading {
+        font-size: var(--font-size-body);
+    }
+
+    .opening-card .value {
+        font-size: var(--font-size-heading5);
+    }
+
+    .clubbing {
+        gap: 6px;
+    }
+
+    footer {
+        margin: 32px 0 48px;
+        gap: 32px;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .footer-content {
+        width: 55%;
+    }
+
+    iframe {
+        width: 45%;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        max-width: 100%;
+        margin: 24px;
+    }
+
+    .container {
+        gap: 4px;
+    }
+
+    header {
+        gap: 2px;
+        margin-top: 4px;
+    }
+
+    #chart-container,
+    #rating-progress-chart,
+    #event-chart,
+    #time-control-chart,
+    #opponent-levels-container {
+        height: 450px;
+    }
+
+    .section {
+        gap: 8px;
+    }
+
+    .section-heading {
+        font-size: var(--font-size-body);
+    }
+
+    .distribution-cards {
+        margin: 6px 0;
+    }
+
+    .metric-card {
+        padding: 24px;
+    }
+
+    #download-pgn-modal .modal-content {
+        max-width: 90%;
+    }
+
+    .parent-club {
+        gap: 4px;
+    }
+
+    h6 {
+        font-size: var(--font-size-label);
+    }
+
+    .metric-card p,
+    .value {
+        font-size: var(--font-size-heading4);
+    }
+
+    .sub-labels-container {
+        gap: 8px;
+    }
+
+    .metric-card .label {
+        margin-top: 12px;
+    }
+
+    small {
+        margin-top: 8px;
+    }
+
+    #games-as-white,
+    #games-as-black {
+        padding: 12px;
+    }
+
+    .opening-card .metric-card {
+        padding: 12px;
+    }
+
+    .opening-card .value {
+        font-size: var(--font-size-heading6);
+    }
+
+    footer p {
+        font-size: var(--font-size-caption);
+        margin: 4px 0;
+        line-height: 1.7;
+    }
+
+    footer h6 {
+        font-size: var(--font-size-body);
+    }
+
+    footer {
+        margin: 32px 0 48px;
+        gap: 32px;
+        flex-direction: column-reverse;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .footer-content {
+        width: 100%;
+    }
+
+    iframe {
+        width: 100%;
+    }
+
+    footer a {
+        text-underline-offset: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    body {
+        max-width: 100%;
+        margin: 0 auto
+    }
+
+    .title {
+        font-size: var(--font-size-heading6);
+    }
+
+    .container {
+        width: 100%;
+        padding: 16px;
+    }
+
+    header {
+        gap: 1px;
+        margin-top: 4px;
+    }
+
+    .section {
+        gap: 4px;
+    }
+
+    .metrics-container {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .metric-card {
+        padding: 16px;
+    }
+
+    .parent-club {
+        gap: 2px;
+    }
+
+    h6 {
+        font-size: var(--font-size-label);
+    }
+
+    .metric-card p,
+    .value {
+        font-size: var(--font-size-heading5);
+    }
+
+    .sub-labels-container {
+        gap: 4px;
+    }
+
+    .metric-card .label {
+        margin-top: 8px;
+    }
+
+    small {
+        margin-top: 8px;
+    }
+
+    #games-as-white,
+    #games-as-black {
+        padding: 8px;
+    }
+
+    .distribution-cards {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .opening-card .metric-card {
+        padding: 8px;
+    }
+
+    .opening-card .value {
+        font-size: var(--font-size-heading6);
+    }
+
+    footer {
+        margin: 8px 16px 48px;
+    }
+
+}

@@ -1,0 +1,617 @@
+@import 'tables.css';
+@import 'responsive.css';
+
+:root {
+    --font-size-displayLarge: 99px;
+    --font-size-displayMedium: 83px;
+    --font-size-displaySmall: 69px;
+    --font-size-heading1: 57px;
+    --font-size-heading2: 48px;
+    --font-size-heading3: 40px;
+    --font-size-heading4: 33px;
+    --font-size-heading5: 28px;
+    --font-size-heading6: 23px;
+    --font-size-subtitle: 19px;
+    --font-size-body: 16px;
+    --font-size-caption: 13px;
+    --font-size-label: 11px;
+    --font-size-tagline: 9px;
+
+    /* Primary Colors */
+    --primary-base: #3f5fff;
+    --primary-light: #ebf5ff;
+    --primary-accent: #203ce2;
+    --primary-dark: #131d53;
+
+    /* Neutral Colors */
+    --obsidian-0: #ffffff;
+    --obsidian-1: #fafafa;
+    --obsidian-2: #f4f4f5;
+    --obsidian-3: #e4e4e7;
+    --obsidian-4: #d4d4d8;
+    --obsidian-5: #a1a1aa;
+    --obsidian-6: #71717a;
+    --obsidian-7: #52525b;
+    --obsidian-8: #3f3f46;
+    --obsidian-9: #27272a;
+    --obsidian-10: #18181b;
+    --obsidian-11: #09090b;
+
+    --slab: "Roboto Slab", serif;
+    --body: "Noto Sans", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: var(--body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: 0.32s linear(0, 0.008 1.1%, 0.031 2.2%, 0.129 4.8%, 0.257 7.2%, 0.671 14.2%, 0.789 16.5%, 0.881 18.6%, 0.957 20.7%, 1.019 22.9%, 1.063 25.1%, 1.094 27.4%, 1.114 30.7%, 1.112 34.5%, 1.018 49.9%, 0.99 59.1%, 1);
+    margin: 0;
+    padding: 0;
+    color: var(--obsidian-11);
+}
+
+body {
+    max-width: 1280px;
+    margin: 24px auto;
+    padding: 0;
+    background-color: var(--obsidian-0);
+    line-height: 1.5;
+}
+
+
+.container {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 0;
+}
+
+.title {
+    font-family: var(--slab);
+    font-size: var(--font-size-heading5);
+}
+
+.subtitle {
+    font-size: var(--font-size-subtitle);
+    color: var(--obsidian-9);
+    line-height: 1.4;
+}
+
+.section {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+    flex: 1;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--obsidian-3);
+    border-radius: 8px;
+    color: var(--obsidian-11);
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.ph-cloud-arrow-down {
+    font-size: 20px;
+    color: var(--obsidian-0);
+}
+
+.loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--primary-light);
+    border-top: 5px solid var(--primary-base);
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.section-heading {
+    padding: 0;
+    font-size: var(--font-size-subtitle);
+    font-weight: 600;
+    line-height: 1.0;
+}
+
+#opponent-levels-container .section-heading {
+    padding-bottom: 0;
+    border-bottom: none;
+
+}
+
+
+.table-container {
+    margin: 32px 0;
+}
+
+.metric-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 32px;
+    border: 1px solid var(--obsidian-2);
+    border-radius: 16px;
+    width: 100%;
+    background-color: var(--obsidian-0);
+    transition: .5s cubic-bezier(0.66, 0, 0.34, 1);
+}
+
+.metric-card:hover {
+    box-shadow: 0 0 0 4px var(--obsidian-1);
+}
+
+.parent-club {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.group-club {
+    display: flex;
+    gap: 16px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+h6 {
+    font-size: var(--font-size-label);
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--obsidian-8);
+    text-transform: uppercase;
+}
+
+.metric-card p,
+.value {
+    font-size: var(--font-size-heading2);
+    font-weight: 700;
+    color: var(--obsidian-11);
+    margin: 0;
+}
+
+.sub-labels-container {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.metric-card .sub-label-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.metric-card .label {
+    font-size: var(--font-size-caption);
+    color: var(--obsidian-9);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-top: 24px;
+}
+
+small {
+    display: block;
+    font-size: var(--font-size-caption);
+    color: var(--obsidian-6);
+    margin-top: 6px;
+}
+
+#username-display {
+    font-weight: 600;
+}
+
+.username-greeting .subtitle [data-playing-duration] {
+    font-weight: 600;
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+
+.username-greeting {
+    margin: 16px 0 8px;
+}
+
+#games-as-white,
+#games-as-black {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: flex-start;
+    align-content: flex-start;
+    padding: 24px;
+    border: 1px solid var(--obsidian-2);
+    border-radius: 16px;
+}
+
+.distribution-cards {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    margin: 8px 0;
+    width: 100%;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    scrollbar-width: none;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-header {
+    position: sticky;
+    top: 0;
+    background-color: var(--obsidian-0);
+    padding: 16px;
+    border-bottom: 1px solid var(--obsidian-2);
+    z-index: 1000;
+}
+
+#game-details-content {
+    padding: 0;
+}
+
+.modal-content {
+    background-color: var(--obsidian-0);
+    margin: 40px auto;
+    padding: 0;
+    border-radius: 24px;
+    max-width: 1280px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+    height: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background-color: var(--obsidian-4);
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background-color: var(--obsidian-5);
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background-color: none;
+    border-radius: 10px;
+}
+
+.close {
+    color: var(--obsidian-8);
+    float: right;
+    font-size: 32px;
+    font-weight: normal;
+    cursor: pointer;
+    line-height: 1.1;
+    vertical-align: middle;
+}
+
+.close:hover {
+    color: black;
+}
+
+code {
+    display: flex;
+    margin: 16px;
+    padding: 16px;
+    background-color: var(--obsidian-1);
+    border: 1px dashed var(--obsidian-3);
+    border-radius: 8px;
+    font-size: var(--font-size-caption);
+    font-weight: 500;
+    word-wrap: break-word;
+    word-break: break-all;
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+#download-pgn-modal .modal-content {
+    margin: 40px auto;
+    padding: 0;
+    max-width: 560px;
+    position: relative;
+}
+
+#download-pgn-modal input[type="text"] {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--obsidian-2);
+    border-radius: 8px;
+    color: var(--obsidian-11);
+    margin-top: 24px;
+    margin-left: 16px;
+    margin-right: 16px;
+    width: calc(100% - 32px);
+    margin-bottom: 16px;
+}
+
+#download-pgn-modal input[type="text"]:hover,
+#download-pgn-modal input[type="text"]:focus-visible,
+#download-pgn-modal input[type="text"]:active {
+    border: 2px solid var(--obsidian-2);
+    outline: 1px solid var(--obsidian-3);
+}
+
+#download-pgn-modal h5 {
+    font-size: var(--font-size-heading6);
+    line-height: 1.2;
+}
+
+#download-pgn-modal button {
+    padding: 8px 16px;
+    background-color: var(--primary-base);
+    color: var(--obsidian-0);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    box-shadow: 0 3px 0 0 var(--primary-accent);
+    margin: 0 16px 32px;
+}
+
+#download-pgn-modal button:disabled {
+    opacity: .5;
+    cursor: none;
+}
+
+#download-pgn-modal small {
+    margin: 24px 16px 16px;
+    font-size: var(--font-size-caption);
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 8px;
+    line-height: 1.0;
+    padding: 24px 16px;
+    background-color: none;
+    color: var(--obsidian-11);
+    border: 1px dashed var(--obsidian-3);
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    width: 100%;
+    transition: .5s cubic-bezier(0.66, 0, 0.34, 1);
+}
+
+.custom-file-upload:hover {
+    background-color: var(--obsidian-0);
+    box-shadow: 0 0 0 4px var(--obsidian-1);
+    border: 1px dashed var(--obsidian-0);
+    border-radius: 16px;
+}
+
+.lichess-download {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 6px;
+    line-height: 1.0;
+    background-color: var(--obsidian-0);
+    color: var(--obsidian-11);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: var(--font-size-caption);
+    font-weight: 500;
+    width: fit-content;
+    white-space: nowrap;
+}
+
+.lichess-download:hover {
+    transform: translateX(4px);
+}
+
+.ph-upload {
+    font-size: 20px;
+    color: var(--obsidian-11);
+}
+
+.ph-arrow-circle-up-right {
+    font-size: 16px;
+    color: var(--obsidian-11);
+}
+
+h5 {
+    font-size: var(--font-size-heading6);
+    line-height: 1.2;
+}
+
+.option-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: flex-start;
+    align-content: flex-start;
+    margin: 16px 0;
+}
+
+.opening-card .metric-card {
+    padding: 24px;
+    border: 1px solid var(--obsidian-2);
+    border-radius: 16px;
+}
+
+.opening-card {
+    display: flex;
+    gap: 16px;
+    flex-grow: 1;
+    margin: 16px;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.opening-card .section-heading {
+    font-size: var(--font-size-body);
+}
+
+.opening-card .value {
+    font-size: var(--font-size-heading4);
+}
+
+.opening-card .icon {
+    width: 20px;
+}
+
+.icon {
+    width: 24px;
+}
+
+.clubbing {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+footer p {
+    font-size: var(--font-size-body);
+    line-height: 1.6;
+    color: var(--obsidian-8);
+    margin: 4px 0 8px
+}
+
+footer h6 {
+    font-size: var(--font-size-subtitle);
+    text-transform: none;
+    letter-spacing: 0px;
+    font-weight: 600;
+    color: var(--fogDark-8);
+}
+
+footer a {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 8px;
+    text-decoration-color: var(--obsidian-4);
+    color: var(--obsidian-11);
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+footer a:hover {
+    text-decoration-color: var(--obsidian-7);
+}
+
+footer {
+    margin: 40px 0 64px;
+    display: flex;
+    gap: 32px;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.footer-content {
+    width: 65%;
+}
+
+iframe {
+    width: 30%;
+    aspect-ratio: 10/11;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 12px;
+    transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--obsidian-4);
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--obsidian-5);
+}
+
+::-webkit-scrollbar-track {
+    background-color: none;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+}
+
+#chart-container,
+#rating-progress-chart,
+#event-chart,
+#time-control-chart,
+#opponent-levels-container {
+    height: 550px;
+}

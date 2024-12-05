@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lichess PGN Analyzer: Analyze your games. Know your openings</title>
+    <meta name="description"
+        content="Upload a PGN file or enter your Lichess username to download and select your games. Get basic metrics and a look at your opening variations.">
+    <meta property="og:image" content="assets/social-image.png">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <meta property="og:title" content="Lichess PGN Analyzer: Analyze your games. Know your openings">
+    <meta property="og:description"
+        content="Upload a PGN file or enter your Lichess username to download and select your games. Get basic metrics and a look at your opening variations.">
+    <meta property="og:image" content="assets/social-image.png">
+    <meta property="og:url" content="">
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css" />
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/tables.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <meta name="robots" content="index, follow">
+    <!-- ECharts CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <header>
+            <h1 class="title">Lichess PGN Analyzer</h1>
+            <p class="subtitle">Analyze your games. Know your openings. To begin, upload a PGN file or enter your
+                Lichess username to download and select your games. Get basic metrics and a look at your opening
+                variations.
+            </p>
+            <div class="option-buttons">
+                <label for="pgn-file" class="custom-file-upload">
+                    <i class="ph-duotone ph-upload"></i>
+                    Select PGN File
+                </label>
+                <input type="file" id="pgn-file" accept=".pgn" title="Upload PGN file" style="display: none;">
+                <button id="download-pgn-btn" class="lichess-download">
+                    <i class="ph-duotone ph-arrow-circle-up-right"></i>
+                    Get PGN from Lichess
+                </button>
+            </div>
+        </header>
+
+        <div id="loading-overlay" class="loading-overlay">
+            <div class="spinner"></div>
+        </div>
+
+        <div id="username-greeting" class="username-greeting" style="display: none;">
+            <p class="subtitle">
+                Hello, you've selected the user <span id="username-display"></span>,
+                This user has been playing chess on Lichess for
+                <span data-playing-duration>.</span>
+            </p>
+            <small data-playing-duration-range></small>
+        </div>
+
+        <section class="distribution-cards">
+            <div class="metric-card">
+                <div class="section-heading">Games</div>
+                <div id="chart-container"></div>
+            </div>
+            <div class="metric-card">
+                <div class="section-heading">Rating progress</div>
+                <div id="rating-progress-chart"></div>
+            </div>
+        </section>
+
+        <section class="distribution-cards">
+            <div class="metric-card">
+                <div class="section-heading">Event types</div>
+                <div id="event-chart"></div>
+            </div>
+            <div class="metric-card">
+                <div class="section-heading">Time controls</div>
+                <div id="time-control-chart"></div>
+            </div>
+        </section>
+
+        <section class="distribution-cards">
+            <div class="metric-card">
+                <div class="section-heading">Opponents</div>
+                <div id="opponent-levels-container"></div>
+            </div>
+        </section>
+
+        <div class="table-container">
+            <h5 class="section-heading">Your openings</h5>
+            <table id="openings-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Opening</th>
+                        <th>Wins</th>
+                        <th>Losses</th>
+                        <th>Draws</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Openings data will be dynamically populated -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="game-details-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span id="modal-close-btn" class="close">&times;</span>
+                    <div id="game-details-header"></div>
+                </div>
+                <div id="game-details-content"></div>
+            </div>
+        </div>
+
+        <div id="download-pgn-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span id="download-modal-close-btn" class="close">&times;</span>
+                    <h5>PGN from Lichess</h5>
+                </div>
+                <input type="text" id="download-username-input" placeholder="Enter Lichess Username">
+                <button type="submit" id="download-pgn-submit-btn">
+                    <i class="ph-duotone ph-cloud-arrow-down"></i>
+                    Download PGN
+                </button>
+                <small>If you don't want to download from here, open a new tab in your browser, change the username in
+                    the link below, and hit enter. Or just go to a profile, click on the menu icon (three horizontal
+                    lines), export games, ensure every setting is turned on, and click download. It may take some time
+                    depending on how many games you've played. That's why I avoided calling the API here and instead
+                    provided this download option.</small>
+                <code>https://lichess.org/api/games/user/{username}?tags=true&clocks=true&evals=true&opening=true&literate=true</code>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <iframe src="https://lichess.org/tv/frame?theme=canvas&pieceSet=tatiana&bg=dark" allowtransparency="true"
+            frameborder="0" title="Live chess game broadcast from Lichess">
+        </iframe>
+        <div class="footer-content">
+            <h6>A bit about the project</h6>
+            <p>First of all, you can see an in-depth analysis on Lichess itself. Visit your profile and click on the
+                "Chess insights" button. You can use many filters and combinations to see different types of insights,
+                and there are also a few filter presets. You can view others' insights by changing the {username} in
+                this URL - <a href="https://lichess.org/insights/{username}/acpl/variant" target="_blank"
+                    rel="noopener noreferrer">https://lichess.org/insights/{username}/acpl/variant</a>. The preloaded
+                data is from a bot on Lichess. I'm just using it as a sample. Credits to that person who
+                made the bot.
+            </p>
+            <p>I started <a href="https://romio.substack.com/p/getting-back-into-chess" target="_blank"
+                    rel="noopener noreferrer">playing chess again</a> a few months ago and now I play almost
+                daily. I switched from Chess.com to Lichess because <a
+                    href="https://romio.substack.com/p/open-design-tools-data-ownership-portability" target="_blank"
+                    rel="noopener noreferrer">I prefer open platforms</a> with fewer restrictions. I'm
+                still a beginner, hovering between 1,000 and 1,150, but I enjoy every game, win or lose.</p>
+            <p>After watching <a href="https://g.co/kgs/GHLyhg8" target="_blank" rel="noopener noreferrer">The Queen's
+                    Gambit</a>, I started creating scripts and projects to analyze games. With Lichess's
+                openness, we can look at other players' games, learn a few tips, or find our own weaknesses. Running
+                scripts
+                can be technical, so I built a front end to make it easier for anyone to use.
+            </p>
+            <p>I found many calculation errors while building this, so I created a <a
+                    href="https://github.com/romiojoseph/open-source/tree/main/chess/analyze-pgn" target="_blank"
+                    rel="noopener noreferrer">Python script</a> to cross-check the data. I used the same logic in the
+                JavaScript, and now everything matches. The Python script also converts relevant details from PGN files
+                into CSV format, making it easier to filter or review all the games conveniently. I tested multiple
+                scenarios, and the numbers are consistent across the CSV, the script outputs, and the JavaScript
+                analysis. However, if you find any irregularities or errors, please let me know.</p>
+            <p>No data is sent anywhere—everything runs in your browser. You can check out the project on <a
+                    href="https://github.com/romiojoseph/lichess-pgn-analyzer" target="_blank"
+                    rel="noopener noreferrer">GitHub</a>. I
+                developed the entire JavaScript using LLMs (Mistal AI, Claude and Google AI Studio. Chart library by <a
+                    href="https://echarts.apache.org/en/index.html" target="_blank" rel="noopener noreferrer">Apache
+                    ECharts</a>). Because of the bugs, there were times I wanted to <a
+                    href="https://bsky.app/profile/romiojoseph.github.io/post/3lcevdbfu5c2y" target="_blank"
+                    rel="noopener noreferrer">abandon</a> this project, but after a good night's
+                sleep and with the help of Cursor, I kept going and finally finished it. There are no analytics tools or
+                trackers used here, so feel free to browse away with peace of mind. You can find a few scripts I've
+                created for chess analysis <a href="https://github.com/romiojoseph/open-source/tree/main/chess"
+                    target="_blank" rel="noopener noreferrer">here</a>. And if you wanna know the combined stats of your
+                Chess.com and Lichess profiles, <a
+                    href="https://romiojoseph.github.io/open-source/unified-chess-stats-tracker-web/" target="_blank"
+                    rel="noopener noreferrer">visit this link</a>.
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/charts.js"></script>
+</body>
+
+</html>
